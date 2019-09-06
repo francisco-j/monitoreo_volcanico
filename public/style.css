@@ -151,11 +151,6 @@ a {
 }
 
 .WelcomeView {
-    background: url("volcan-gr.jpg") left bottom;
-    background-size: cover;
-}
-
-.UserView{
-  background: url("team.jpg") left bottom;
+  background: url("volcan-gr.jpg") center center;
   background-size: cover;
 }
