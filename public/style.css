@@ -150,6 +150,26 @@ a {
   box-shadow: var(--ui-shawdow);
 }
 
+.UploadButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 55px;
+  width: 150px;
+
+  background: var(--highlight);
+
+  border-radius: 30px;
+
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+
+  border-bottom: var(--ui-shawdow-border);
+  box-shadow: var(--ui-shawdow);
+}
+
 .WelcomeView {
   background: url("volcan-gr.jpg") center center;
   background-size: cover;

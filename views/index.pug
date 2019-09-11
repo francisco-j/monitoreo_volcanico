@@ -2,12 +2,13 @@ extends layout
 
 block layout-content
   div.View.WelcomeView
-    h1.Banner WHATABYTE
+    h1.Banner MONITOREO VOLCÁNICO
     div.Message
       div.Title
-        h3 Making the Best
-        h1 Food For Devs
-      span.Details Access the WHATABYTE Team Portal
+        h3 empty dataset
+        h1 upload first file
+      form(action='/add_movie', method='POST')
+        input.UploadButton(type='file', name='droneFile', value='')
     div.NavButtons
       if isAuthenticated
         a(href="/user")
