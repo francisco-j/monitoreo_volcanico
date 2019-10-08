@@ -1,37 +1,20 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const path = require("path");
+
+var Drone = require('./models/drone'); //drone_flight model
 
 const app = express();
-//require("./routes/web")(app, express);
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json()); //why? : https://stackoverflow.com/questions/47232187/express-json-vs-bodyparser-json
 
+app.use("/", require("./rutes/main")) //main domains
+app.use("/api", require("./rutes/api")) //api domains
+//app.use("/admmin", require("./rutes/admin")) //admin domains
 
-app.get("/", (req, res) => {
-    res.render("index", { title: "Home" });
-  });
+require('./utilities/mongodb')(mongoose); //conect to mongoDB
+require('./utilities/pug')(app, express); //using pug
 
-app.get("/user", (req, res) => {
-    res.render("user", { title: "Profile", userProfile: { nickname: "Auth0" } });
-});
-
-/*
-// connect to  mongoDB //MONGODB_URI defined in heroku
-var mongoUri = (process.env.MONGODB_URI || 'mongodb://localhost/bears-me');
-mongoose.connect(mongoUri, { useNewUrlParser: true })
-    .catch((e) => {
-        console.log(e.message)
-        process.exit(1)
-    })
-    .then(() => {
-        console.log("connected to Mongo Atlas")
-    });
-*/
 const port = process.env.PORT || "8000";
 app.listen(port, () => {
-    console.log(`Listening to requests on http://localhost:${port}`);
+    console.log(`Listening on http://localhost:${port}`);
 });
-

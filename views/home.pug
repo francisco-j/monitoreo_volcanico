@@ -1,0 +1,38 @@
+extends layout
+
+block layout-content
+  div.View
+    h1.Banner MONITOREO VOLCÁNICO
+    div.CardContainer#cardContainer
+      each item in droneArray
+        div.Card(id=`card${item.id}`)
+          h2 #{item.formatedDate}
+          div.Details
+            span Entradas:#{item.entries}
+            span duracion: #{item.durationStr}
+          table
+            tbody
+              tr
+                th  
+                th min
+                th max
+                th prom
+              tr
+                td temperatura
+                td #{item.overview.temp.min}
+                td #{item.overview.temp.max}
+                td #{item.overview.temp.mean}
+
+    div.NavButtons
+      button.NavButton#newEntry +
+
+    div.Modal#modal
+      form.Form#drone_form(action='/', method='POST')
+        input.FormButtonFile#drone_file(name="file" type='file', required)
+        label.FileLabel#fileLabel(for="drone_file") Choose a file
+        input.FormButton#drone_date(type='date', required)
+        input#drone_time(type='time', required)
+        input.FormButton(type="submit" value="submit")
+
+  script(src="https://unpkg.com/axios/dist/axios.min.js")
+  script(src="/js/home.js")
