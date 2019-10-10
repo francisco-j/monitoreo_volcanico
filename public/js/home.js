@@ -12,7 +12,7 @@ document.getElementById("newEntry").onclick = () => {
     modalElemet.style.display = "flex";
 };
 //hide modal
-modalElemet.onclick = (event)=>{
+modalElemet.onclick = (event) => {
     if (event.target == modalElemet)
         modalElemet.style.display = "none";
 };
@@ -27,7 +27,7 @@ document.getElementById("drone_file").onchange = (event) => {
         fileString = reader.result;
         //fileString = fileString.replace('\n', ',');
         fileString = '{"data":[ ' + fileString + '] }';
-        
+
         fileReady = true;
         console.log("file ready");
         document.getElementById("fileLabel").innerText = event.target.files[0].name;
@@ -35,10 +35,10 @@ document.getElementById("drone_file").onchange = (event) => {
     reader.readAsText(event.target.files[0]);
 };
 
-// the important one. for data sending
+// the important one. for flight uploading
 document.getElementById("drone_form").onsubmit = (event) => {
     event.preventDefault()
-    if (fileReady == false){
+    if (fileReady == false) {
         alert("upload a file, or wait for the file to upload");
         return;
     }
@@ -50,17 +50,18 @@ document.getElementById("drone_form").onsubmit = (event) => {
     jsonObj.date = new Date(dateIn + " " + timeIn);
 
     axios.post('/api/drone', jsonObj)
-        .then( (response)=>{
+        .then((response) => {
             addCard(response.data);
             modalElemet.style.display = "none";
         })
-        .catch((error)=>{
+        .catch((error) => {
             console.log(error.message);
         });
 };
+
 function addCard(json) {
-    let{formatedDate, formatedTime, durationStr} = getStrings(json);
-    let newCard = `<div class="Card" id="card${json.id}"><h2>${formatedDate}</h2><h4>${formatedTime}</h4><div class="Details"><span>entradas:${json.entries}</span><span>duracion: ${durationStr}</span></div><table><tr><th> </th><th>min</th><th>max</th><th>prom</th></tr><tr><td>temperatura</td><td>${json.overview.temp.min}</td><td>${json.overview.temp.max}</td><td>${json.overview.temp.mean.toFixed(2)}</td></tr></table></div>`;    
+    let { formatedDate, formatedTime, durationStr } = getStrings(json);
+    let newCard = `<div class="Card" id="card${json.id}"><h2>${formatedDate}</h2><h4>${formatedTime}</h4><div class="Details"><span>entradas:${json.entries}</span><span>duracion: ${durationStr}</span></div><table><tr><th> </th><th>min</th><th>max</th><th>prom</th></tr><tr><td>temperatura</td><td>${json.overview.temp.min}</td><td>${json.overview.temp.max}</td><td>${json.overview.temp.mean.toFixed(2)}</td></tr></table></div>`;
 
     let container = document.getElementById("cardContainer");
     container.innerHTML = newCard + container.innerHTML;
@@ -70,21 +71,30 @@ function getStrings(json) {
     let tempDate = new Date(json.date)
     let formatedDate = tempDate.getDate() + ' ' + monthNames[tempDate.getMonth()] + ' ' + tempDate.getFullYear();
 
-    let hours = (tempDate.getHours())% 12; // mod 12;
-        if(hours==0) hours=12; //if'0' then'12'
+    let hours = (tempDate.getHours()) % 12; // mod 12;
+    if (hours == 0) hours = 12; //if'0' then'12'
     let ampm = tempDate.getHours() >= 12 ? 'pm' : 'am';
     let minutes = tempDate.getMinutes();
-        if(minutes < 10) minutes = '0'+minutes;
+    if (minutes < 10) minutes = '0' + minutes;
     let formatedTime = hours + ':' + minutes + ' ' + ampm;
-    
+
     tempDate = new Date(json.duration);
     let seconds = tempDate.getSeconds()
-        if(seconds < 10) seconds = '0'+seconds;
+    if (seconds < 10) seconds = '0' + seconds;
     durationStr = tempDate.getMinutes() + ":" + seconds;
 
-    return {formatedDate, formatedTime, durationStr};
+    return { formatedDate, formatedTime, durationStr };
 };
 
+//TODO:
+// make the eye icons show the full description
+Array.from(document.getElementsByClassName("Eye")).forEach((icon) => {
+    icon.onclick = (event) => {
+        window.location.href+=
+        "vuelos/"+
+        event.target.parentNode.parentNode.id;
+    };
+});
 
 /*
 function fileToJson(fileString) {
@@ -93,4 +103,4 @@ function fileToJson(fileString) {
 */
 
 //TODO: reset file tag after push
- 
+

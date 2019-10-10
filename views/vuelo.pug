@@ -2,8 +2,26 @@ extends layout
 
 block layout-content
   div.View
-    h1.Banner #{title.id}
-    
+    div.Banner
+      h1 #{drone.formatedDate}
+      h2 #{drone.formatedTime}
+
     div.CardContainer#cardContainer
+        div.Card.Fill(id=`card${drone.id}`)
+          div.Details
+            span entradas:#{drone.entries}
+            span duracion: #{drone.durationStr}
+          table
+            tbody
+              tr
+                th  
+                th tiempo
+                th temperatura
+              each item in drone.data
+                tr
+                  td
+                    input(type="checkbox" name="name1")
+                  td #{item.milisegundos}
+                  td #{item.temperatura}
 
   script(src="/js/vuelo.js")

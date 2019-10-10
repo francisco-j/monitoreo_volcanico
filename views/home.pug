@@ -2,16 +2,20 @@ extends layout
 
 block layout-content
   div.View
-    h1.Banner MONITOREO VOLCÁNICO
+    div.Banner
+      h1 MONITOREO VOLCÁNICO
 
     div.NavButtons
-      div.New#newEntry +
+      .New#newEntry +
+      div
+        i.fas.fa-filter
+        i.fas.fa-sort-down
 
     div.CardContainer#cardContainer
       each item in droneArray
-        div.Card(id=`card${item.id}`)
+        div.Card(id = `${item.id}`)
           div.Options
-            i.Button.material-icons visibility
+            i.Eye.material-icons visibility
             i.Negative.material-icons delete
           h2 #{item.formatedDate}
           h4 #{item.formatedTime}
@@ -44,5 +48,4 @@ block layout-content
         input.Button#drone_time(type='time', required)
         input.Submit(type="submit" value="submit")
 
-  script(src="https://unpkg.com/axios/dist/axios.min.js")
   script(src="/js/home.js")

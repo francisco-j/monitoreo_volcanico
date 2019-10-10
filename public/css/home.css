@@ -81,8 +81,6 @@ th, td {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
 
   height: 100%;
   width: 100%;
@@ -96,12 +94,12 @@ th, td {
 }
 
 .Banner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: relative; /* soo that i can relocate the options inside*/
 
-  overflow: hidden;
+  display: flex;
+  flex-direction: row ;
+  justify-content: space-around;
+  align-items: center;
 
   width: 100%;
   border-radius: 5px;
@@ -109,9 +107,12 @@ th, td {
   background: var(--background);
   padding: 15px;
 
-  font-family: var(--logo-font);
-
   box-shadow: var(--ui-shawdow);
+
+  font-family: var(--logo-font);
+}
+.Banner > * {
+  font-family: inherit;
 }
 
 .Options{
@@ -125,6 +126,10 @@ th, td {
 .Options > .Negative:hover {
   cursor: pointer;
   color: red;
+}
+.Options > .Eye:hover {
+  cursor: pointer;
+  color: #2196f3;
 }
 .Options > .Button:hover {
   cursor: pointer;
@@ -151,17 +156,37 @@ th, td {
   flex-direction: column;
   align-content: space-around;
 }
+.Fill{
+  height: 100%;
+  width: 100%;
+}
 
 .NavButtons {
   margin: 10px;
 
   display: flex;
   width: 100%;
-  justify-content: space-between;
   align-items: flex-end;
   padding: 0 20px;
 }
 .NavButtons > .New {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 55px;
+  width: 55px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+
+  background: var(--highlight);
+  border-radius: 30px;
+  box-shadow: var(--ui-shawdow);
+
+  cursor: pointer;
+}
+.NavButtons > * {
   display: flex;
   justify-content: center;
   align-items: center;
