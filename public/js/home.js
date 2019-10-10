@@ -59,18 +59,32 @@ document.getElementById("drone_form").onsubmit = (event) => {
         });
 };
 function addCard(json) {
-    var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-
-    let tempDate = new Date(json.date)
-    let dateStr = tempDate.getDate() + ' ' + monthNames[tempDate.getMonth()] + ' ' + tempDate.getFullYear();
-        tempDate = new Date(json.duration);
-    let durationStr = `duracion: ${tempDate.getMinutes()}:${tempDate.getSeconds()}`;
-    let overviewTable = `<table><tr><th> </th><th>min</th><th>max</th><th>prom</th></tr><tr><td>temperatura</td><td>${json.overview.temp.min}</td><td>${json.overview.temp.max}</td><td>${json.overview.temp.mean.toFixed(2)}</td></tr></table>`;
-    let newCard = `<div class="Card" id="card${json.id}"><h2>${dateStr}</h2><div class="Details"><span>Entradas:${json.entries}</span><span>Entradas:${durationStr}</span></div>${overviewTable}</div>`;    
+    let{formatedDate, formatedTime, durationStr} = getStrings(json);
+    let newCard = `<div class="Card" id="card${json.id}"><h2>${formatedDate}</h2><h4>${formatedTime}</h4><div class="Details"><span>entradas:${json.entries}</span><span>duracion: ${durationStr}</span></div><table><tr><th> </th><th>min</th><th>max</th><th>prom</th></tr><tr><td>temperatura</td><td>${json.overview.temp.min}</td><td>${json.overview.temp.max}</td><td>${json.overview.temp.mean.toFixed(2)}</td></tr></table></div>`;    
 
     let container = document.getElementById("cardContainer");
     container.innerHTML = newCard + container.innerHTML;
 };
+function getStrings(json) {
+    var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    let tempDate = new Date(json.date)
+    let formatedDate = tempDate.getDate() + ' ' + monthNames[tempDate.getMonth()] + ' ' + tempDate.getFullYear();
+
+    let hours = (tempDate.getHours())% 12; // mod 12;
+        if(hours==0) hours=12; //if'0' then'12'
+    let ampm = tempDate.getHours() >= 12 ? 'pm' : 'am';
+    let minutes = tempDate.getMinutes();
+        if(minutes < 10) minutes = '0'+minutes;
+    let formatedTime = hours + ':' + minutes + ' ' + ampm;
+    
+    tempDate = new Date(json.duration);
+    let seconds = tempDate.getSeconds()
+        if(seconds < 10) seconds = '0'+seconds;
+    durationStr = tempDate.getMinutes() + ":" + seconds;
+
+    return {formatedDate, formatedTime, durationStr};
+};
+
 
 /*
 function fileToJson(fileString) {

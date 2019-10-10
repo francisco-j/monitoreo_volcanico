@@ -3,12 +3,20 @@ extends layout
 block layout-content
   div.View
     h1.Banner MONITOREO VOLCÁNICO
+
+    div.NavButtons
+      div.New#newEntry +
+
     div.CardContainer#cardContainer
       each item in droneArray
         div.Card(id=`card${item.id}`)
+          div.Options
+            i.Button.material-icons visibility
+            i.Negative.material-icons delete
           h2 #{item.formatedDate}
+          h4 #{item.formatedTime}
           div.Details
-            span Entradas:#{item.entries}
+            span entradas:#{item.entries}
             span duracion: #{item.durationStr}
           table
             tbody
@@ -23,16 +31,18 @@ block layout-content
                 td #{item.overview.temp.max}
                 td #{item.overview.temp.mean}
 
-    div.NavButtons
-      button.NavButton#newEntry +
-
     div.Modal#modal
       form.Form#drone_form(action='/', method='POST')
-        input.FormButtonFile#drone_file(name="file" type='file', required)
-        label.FileLabel#fileLabel(for="drone_file") Choose a file
-        input.FormButton#drone_date(type='date', required)
-        input#drone_time(type='time', required)
-        input.FormButton(type="submit" value="submit")
+        div.Options
+          i.Negative.material-icons close
+        input.File#drone_file(name="file" type='file', required)
+        label.FileLabel#fileLabel(for="drone_file")
+          i.fas.fa-cloud-upload-alt
+          span selecionar
+          span archivo
+        input.Button#drone_date(type='date', required)
+        input.Button#drone_time(type='time', required)
+        input.Submit(type="submit" value="submit")
 
   script(src="https://unpkg.com/axios/dist/axios.min.js")
   script(src="/js/home.js")

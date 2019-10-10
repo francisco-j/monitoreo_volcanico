@@ -53,7 +53,6 @@ router.post("/drone", (req, res) => {
 
     //calculate sensor's mean
     function calculateMean(overviewer) {
-        //TODO: round to 2 decimals
         overviewer.mean = +(overviewer.sum / fligth.entries).toFixed(2);
         delete overviewer.sum;
     }
