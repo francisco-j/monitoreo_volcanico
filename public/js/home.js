@@ -28,6 +28,7 @@ document.getElementById("drone_file").onchange = (event) => {
     reader.onload = () => {
         //corectly format the file to a string
         fileString = reader.result;
+        //TODO:
         //fileString = fileString.replace('\n', ',');
         fileString = '{"data":[ ' + fileString + '] }';
 
@@ -102,10 +103,11 @@ Array.from(document.getElementsByClassName("Eye")).forEach((icon) => {
 // make the trash icons delete the entrie
 Array.from(document.getElementsByClassName("Delete")).forEach((icon) => {
     icon.onclick = (event) => {
-        droneId = event.target.parentNode.parentNode.id;
-        axios.delete(`/api/vuelos/${droneId}`)
+        card = event.target.parentNode.parentNode;
+        axios.delete(`/api/vuelos/${card.id}`)
             .then((response) => {
                 alert("borrado con exito");
+                card.remove();
             })
             .catch((error) => {
                 console.log(error);
