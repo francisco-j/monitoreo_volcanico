@@ -3,19 +3,8 @@ var router = express.Router();
 const Drone = require('../models/drone'); // /index
 //const {Drone, DroneRaw} = require('../models'); // /index
 
-// middleware, specific for this router
-router.use(function (req, res, next) {
-    console.log('api is being used');
-    next(); // make sure we continue
-});
-
 router.get("/", (req, res) => {
     res.render("api-home", { title: "api" });
-});
-
-router.get("/drone", (req, res) => {
-    //send drone form
-    res.send(req.body); //echo
 });
 
 router.post("/drone", (req, res) => {
@@ -77,6 +66,20 @@ router.post("/drone", (req, res) => {
             delete fligth.data;  // dont send everithing
             res.send(fligth);   //return updated json
         }
+    });
+});
+
+router.delete("/vuelos/:id", (req, res) => {
+    let id = req.params.id;
+    
+    Drone.findByIdAndDelete(id)
+    .then(()=>{
+        console.log("Borrado: "+id);
+        res.status(200).send();
+    })
+    .catch((e) => {
+        console.error(e.message);
+        res.send(e);
     });
 });
 

@@ -2,14 +2,6 @@ var express = require('express');
 var router = express.Router();
 const Drone = require('../models/drone'); // /index
 
-/*
-// middleware that is specific to this router
-router.use(function (req, res, next) {
-    console.log('Something is happening.'); // do logging
-    next(); // make sure we go to the next routes and don't stop here
-});
-*/
-
 router.get("/", (req, res) => {
     function addStrings(entry) {
         var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -34,7 +26,7 @@ router.get("/", (req, res) => {
         })
         .catch((e) => {
             console.error(e);
-            res.send(e);
+            res.send(e.message);
         });
 });
 
@@ -56,7 +48,6 @@ router.get("/vuelos/:id", (req, res) => {
     };
     
     let id = req.params.id;
-    console.log(id);
     
     Drone.findById(id)
     .then((flight) => {

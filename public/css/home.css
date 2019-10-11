@@ -123,17 +123,15 @@ th, td {
   display: flex;
   flex-direction: row;
 }
-.Options > .Negative:hover {
+.Options > *:hover {
   cursor: pointer;
-  color: red;
 }
 .Options > .Eye:hover {
-  cursor: pointer;
   color: #2196f3;
 }
-.Options > .Button:hover {
-  cursor: pointer;
-  color: #2196f3;
+.Options > .Delete:hover,
+.Options > .Close:hover{
+  color: red;
 }
 
 .CardContainer{
@@ -162,31 +160,14 @@ th, td {
 }
 
 .NavButtons {
-  margin: 10px;
-
   display: flex;
   width: 100%;
   align-items: flex-end;
   padding: 0 20px;
 }
-.NavButtons > .New {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  height: 55px;
-  width: 55px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-
-  background: var(--highlight);
-  border-radius: 30px;
-  box-shadow: var(--ui-shawdow);
-
-  cursor: pointer;
-}
 .NavButtons > * {
+  margin: 10px;
+
   display: flex;
   justify-content: center;
   align-items: center;

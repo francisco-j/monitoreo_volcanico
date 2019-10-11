@@ -6,17 +6,18 @@ block layout-content
       h1 MONITOREO VOLCÁNICO
 
     div.NavButtons
-      .New#newEntry +
+      div#newEntry
+        i.fas.fa-plus
       div
         i.fas.fa-filter
         i.fas.fa-sort-down
 
-    div.CardContainer#cardContainer
+    div.CardContainer#cardContainer 
       each item in droneArray
         div.Card(id = `${item.id}`)
           div.Options
             i.Eye.material-icons visibility
-            i.Negative.material-icons delete
+            i.Delete.material-icons delete
           h2 #{item.formatedDate}
           h4 #{item.formatedTime}
           div.Details
@@ -37,15 +38,19 @@ block layout-content
 
     div.Modal#modal
       form.Form#drone_form(action='/', method='POST')
-        div.Options
-          i.Negative.material-icons close
+        div.Options#closeModal
+          i.Negative.material-icons.Close close
+
         input.File#drone_file(name="file" type='file', required)
         label.FileLabel#fileLabel(for="drone_file")
           i.fas.fa-cloud-upload-alt
           span selecionar
           span archivo
+
         input.Button#drone_date(type='date', required)
+
         input.Button#drone_time(type='time', required)
+        
         input.Submit(type="submit" value="submit")
 
   script(src="/js/home.js")

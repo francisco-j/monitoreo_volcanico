@@ -14,7 +14,10 @@ document.getElementById("newEntry").onclick = () => {
 //hide modal
 modalElemet.onclick = (event) => {
     if (event.target == modalElemet)
-        modalElemet.style.display = "none";
+    modalElemet.style.display = "none";
+};
+document.getElementById("closeModal").onclick = (event) => {
+    modalElemet.style.display = "none";
 };
 
 //file change
@@ -56,9 +59,11 @@ document.getElementById("drone_form").onsubmit = (event) => {
         })
         .catch((error) => {
             console.log(error.message);
+            resizeBy.send(error.message);
         });
 };
 
+//modifies doom
 function addCard(json) {
     let { formatedDate, formatedTime, durationStr } = getStrings(json);
     let newCard = `<div class="Card" id="card${json.id}"><h2>${formatedDate}</h2><h4>${formatedTime}</h4><div class="Details"><span>entradas:${json.entries}</span><span>duracion: ${durationStr}</span></div><table><tr><th> </th><th>min</th><th>max</th><th>prom</th></tr><tr><td>temperatura</td><td>${json.overview.temp.min}</td><td>${json.overview.temp.max}</td><td>${json.overview.temp.mean.toFixed(2)}</td></tr></table></div>`;
@@ -86,13 +91,26 @@ function getStrings(json) {
     return { formatedDate, formatedTime, durationStr };
 };
 
-//TODO:
 // make the eye icons show the full description
 Array.from(document.getElementsByClassName("Eye")).forEach((icon) => {
     icon.onclick = (event) => {
-        window.location.href+=
-        "vuelos/"+
-        event.target.parentNode.parentNode.id;
+        droneId = event.target.parentNode.parentNode.id;
+        window.location.href += "vuelos/" + droneId;
+    };
+});
+
+// make the trash icons delete the entrie
+Array.from(document.getElementsByClassName("Delete")).forEach((icon) => {
+    icon.onclick = (event) => {
+        droneId = event.target.parentNode.parentNode.id;
+        axios.delete(`/api/vuelos/${droneId}`)
+            .then((response) => {
+                alert("borrado con exito");
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("Error al borrar:\n"+error.message);
+            });
     };
 });
 
