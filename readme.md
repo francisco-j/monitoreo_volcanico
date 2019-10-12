@@ -1,17 +1,16 @@
-to start the server:
-npm run dev
-
-to restart nodemon:
-rs
-
-to start local mongo:
-$ mongod --fork --logpath /var/log/mongodb.log; npm run dev
 
 
-con arnoldo
+para lebantar el servidor en local primero encender mongo:
+    $ mongod --fork --logpath /var/log/mongodb.log
 
-folowed tutorial:
-https://auth0.com/blog/create-a-simple-and-stylish-node-express-app/
+para iniciar el servidor con nodemon:
+    $ npm run dev
 
-pug inheritance
-https://pugjs.org/language/inheritance.html
+para forsar el refresh de nodemon simplemte con `rs`
+
+
+
+
+
+
+puedes crear archivos de test con `test_files/generator.js`
