@@ -138,6 +138,7 @@ th, td {
   display: flex;
   overflow: auto;
   flex-wrap: wrap;
+  margin-top: 10px;
 }
 .Card {
   position: relative; /* soo that i can relocate the options inside*/
@@ -155,7 +156,6 @@ th, td {
   align-content: space-around;
 }
 .Fill{
-  height: 100%;
   width: 100%;
 }
 
