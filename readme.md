@@ -1,10 +1,13 @@
 
-
 para lebantar el servidor en local primero encender mongo:
-    $ mongod --fork --logpath /var/log/mongodb.log
+```
+$ mongod --fork --logpath /var/log/mongodb.log
+```
 
 para iniciar el servidor con nodemon:
-    $ npm run dev
+```
+$ npm run dev
+```
 
 para forsar el refresh de nodemon simplemte con `rs`
 

@@ -89,7 +89,7 @@ th, td {
   font-family: var(--core-font);
   
   position: fixed;
-  background: url("../volcan-gr.jpg") center center;
+  background: url("../img/volcan-gr.jpg") center center;
   background-size: cover;
 }
 

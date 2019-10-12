@@ -28,8 +28,6 @@ document.getElementById("drone_file").onchange = (event) => {
     reader.onload = () => {
         //corectly format the file to a string
         fileString = reader.result;
-        //TODO:
-        //fileString = fileString.replace('\n', ',');
         fileString = fileString.replace(/,\s*$/, "");
         fileString = '{"data":[ ' + fileString + '] }';
 
