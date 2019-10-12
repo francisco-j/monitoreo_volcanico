@@ -1,0 +1,1 @@
+{"milisegundos":13000, "temperatura":29.79}, {"milisegundos":16000, "temperatura":29.30}, {"milisegundos":19000, "temperatura":29.30}, {"milisegundos":22000, "temperatura":26.79}, {"milisegundos":25000, "temperatura":29.30}
