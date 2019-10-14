@@ -38,7 +38,7 @@ document.getElementById("drone_file").onchange = (event) => {
     reader.readAsText(event.target.files[0]);
 };
 
-// the important one. for flight uploading
+// flight uploading
 document.getElementById("drone_form").onsubmit = (event) => {
     event.preventDefault()
     if (fileReady == false) {
@@ -63,7 +63,7 @@ document.getElementById("drone_form").onsubmit = (event) => {
         });
 };
 
-//modifies doom
+// function - modifies doom
 function addCard(json) {
     let { formatedDate, formatedTime, durationStr } = getStrings(json);
     let newCard = `<div class="Card" id="card${json.id}"><h2>${formatedDate}</h2><h4>${formatedTime}</h4><div class="Details"><span>entradas:${json.entries}</span><span>duracion: ${durationStr}</span></div><table><tr><th> </th><th>min</th><th>max</th><th>prom</th></tr><tr><td>temperatura</td><td>${json.overview.temp.min}</td><td>${json.overview.temp.max}</td><td>${json.overview.temp.mean.toFixed(2)}</td></tr></table></div>`;
@@ -90,6 +90,14 @@ function getStrings(json) {
 
     return { formatedDate, formatedTime, durationStr };
 };
+
+//paint each card's graps
+Array.from(document.getElementsByClassName("Card")).forEach((card) => {
+        //request to API all entryes corresponding to the card
+
+        //paint graph
+});
+
 
 // make the eye icons show the full description
 Array.from(document.getElementsByClassName("Eye")).forEach((icon) => {
