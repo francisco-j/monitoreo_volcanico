@@ -93,6 +93,12 @@ th, td {
   background-size: cover;
 }
 
+.Logo{
+  margin: 5px;
+  height: 75px;
+  width: 75px;
+}
+
 .Banner {
   position: relative; /* soo that i can relocate the options inside*/
 
@@ -132,6 +138,12 @@ th, td {
 .Options > .Delete:hover,
 .Options > .Close:hover{
   color: red;
+}
+
+.HorizontalContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .FullContainer{

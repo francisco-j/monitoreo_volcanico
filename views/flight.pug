@@ -2,9 +2,11 @@ extends layout
 
 block layout-content
   div.View
-    div.Banner
-      h1 #{drone.formatedDate}
-      h2 #{drone.formatedTime}
+    div.HorizontalContainer
+      img.Logo(src="../img/v.png")
+      div.Banner
+        h1 #{drone.formatedDate}
+        h2 #{drone.formatedTime}
 
     div.FullContainer#cardContainer
       div.Card.Fill(id=`${drone.id}`)
