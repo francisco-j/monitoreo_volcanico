@@ -64,7 +64,7 @@ router.get("/vuelos/:id", (req, res) => {
     .then((flight) => {
         addStrings(flight);
         flight.data.forEach(addStringsSample);
-        res.render("flight", { title: id, drone: flight});
+        res.render("flight", { title: "detalles", drone: flight});
     })
     .catch((e) => {
         console.error(e);

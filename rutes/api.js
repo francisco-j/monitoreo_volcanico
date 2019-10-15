@@ -69,6 +69,20 @@ router.post("/drone", (req, res) => {
     });
 });
 
+//to get the data from the fligth
+router.get("/vuelos/data/:id", (req, res) => {
+    let id = req.params.id;
+    
+    Drone.findById(id)
+    .then((flight) => {
+        res.send(flight.data);
+    })
+    .catch((e) => {
+        console.error(e);
+        res.send(e.message);
+    });
+});
+
 router.delete("/vuelos/:id", (req, res) => {
     let id = req.params.id;
     

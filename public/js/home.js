@@ -100,6 +100,7 @@ Array.from(document.getElementsByClassName("Card")).forEach((card) => {
 
 
 // make the eye icons show the full description
+//FIXME:
 Array.from(document.getElementsByClassName("Eye")).forEach((icon) => {
     icon.onclick = (event) => {
         droneId = event.target.parentNode.parentNode.id;
