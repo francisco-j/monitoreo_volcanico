@@ -1,13 +1,14 @@
 var fileString = null;
 var fileReady = false;
-var modalElemet = document.getElementById('modal');
 
-//const axios = require('axios'); //already in index
+//const axios = require('axios'); //already in layout
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.timeout = 2500;
 
+// ------------------- event handlesrs -------------------
 
 //show modal
+var modalElemet = document.getElementById('modal');
 document.getElementById("newEntry").onclick = () => {
     modalElemet.style.display = "flex";
 };
@@ -63,7 +64,44 @@ document.getElementById("drone_form").onsubmit = (event) => {
         });
 };
 
-// function - modifies doom
+// eye-icons on-click
+Array.from(document.getElementsByClassName("Eye")).forEach((icon) => {
+    icon.onclick = (event) => {
+        droneId = event.target.parentNode.parentNode.id;
+        window.location.href += "vuelos/" + droneId;
+    };
+});
+
+// trash-icons on-click
+Array.from(document.getElementsByClassName("Delete")).forEach((icon) => {
+    icon.onclick = (event) => {
+        card = event.target.parentNode.parentNode;
+        axios.delete(`/api/vuelos/${card.id}`)
+            .then((response) => {
+                alert("borrado con exito");
+                card.remove();
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("Error al borrar:\n"+error.message);
+            });
+    };
+});
+
+//TODO: add onclick to logo
+// Logo on-clock
+document.getElementsByClassName("Logo")[0].onclick = () => {
+    console.log("en homescreen");
+    window.location = '/';
+};
+
+
+//TODO: reset file tag after push
+
+
+// ------------------- function declarations -------------------
+
+// modifies doom - adds a card to the container
 function addCard(json) {
     let { formatedDate, formatedTime, durationStr } = getStrings(json);
     let newCard = `<div class="Card" id="card${json.id}"><h2>${formatedDate}</h2><h4>${formatedTime}</h4><div class="Details"><span>entradas:${json.entries}</span><span>duracion: ${durationStr}</span></div><table><tr><th> </th><th>min</th><th>max</th><th>prom</th></tr><tr><td>temperatura</td><td>${json.overview.temp.min}</td><td>${json.overview.temp.max}</td><td>${json.overview.temp.mean.toFixed(2)}</td></tr></table></div>`;
@@ -91,44 +129,12 @@ function getStrings(json) {
     return { formatedDate, formatedTime, durationStr };
 };
 
-//paint each card's graps
+
+// ------------------- function calls -------------------
+
+//paint each card's graphs
 Array.from(document.getElementsByClassName("Card")).forEach((card) => {
         //request to API all entryes corresponding to the card
 
         //paint graph
 });
-
-
-// make the eye icons show the full description
-//FIXME:
-Array.from(document.getElementsByClassName("Eye")).forEach((icon) => {
-    icon.onclick = (event) => {
-        droneId = event.target.parentNode.parentNode.id;
-        window.location.href += "vuelos/" + droneId;
-    };
-});
-
-// make the trash icons delete the entrie
-Array.from(document.getElementsByClassName("Delete")).forEach((icon) => {
-    icon.onclick = (event) => {
-        card = event.target.parentNode.parentNode;
-        axios.delete(`/api/vuelos/${card.id}`)
-            .then((response) => {
-                alert("borrado con exito");
-                card.remove();
-            })
-            .catch((error) => {
-                console.log(error);
-                alert("Error al borrar:\n"+error.message);
-            });
-    };
-});
-
-/*
-function fileToJson(fileString) {
-    return '{"date":null, "data":[ ' + fileString + '] }';
-};
-*/
-
-//TODO: reset file tag after push
-

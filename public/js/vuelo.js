@@ -2,15 +2,16 @@
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.timeout = 2500;
 
+// ------------------- event handlesrs -------------------
 
-//ask api for data array
-var droneId = document.getElementsByClassName("Card")[0].id;
-var fullArray = null;
-var myDatasets = myDatasets = {
-    labels: [],
-    temp: []
-    //ppt: []
+// Logo on-clock
+document.getElementsByClassName("Logo")[0].onclick = () => {
+    console.log("en homescreen");
+    window.location = '/';
 };
+
+
+// ------------------- function declarations -------------------
 
 //refractor data into DataTransferItemList.data
 function refractor(fullArray) {
@@ -22,10 +23,16 @@ function refractor(fullArray) {
         return tempDate.getMinutes() + ":" + seconds;
     }
 
+    let myDatasets = {
+        labels: [],
+        temp: []
+        //ppt: []
+    };
+
     fullArray.forEach((element) => {
-        myDatasets.temp.push(element["temperatura"]);
         myDatasets.labels.push(formatTime(element.milisegundos));
-        //TODO: ppt
+        myDatasets.temp.push(element.temperatura);
+        //ppt
     });
 
     return myDatasets;
@@ -58,14 +65,18 @@ function drawChart(datasetLabel, data, labels) {
     );
 }
 
+// ------------------- function calls -------------------
 
+//ask api for data array
+let droneId = document.getElementsByClassName("Card")[0].id;
 axios.get(`/api/vuelos/data/${droneId}`)
     .then((response) => {
-        fullArray = response.data; //the data array from the drone
-        let factorized = refractor(fullArray);
+        let factorized = refractor(response.data); //separate the data from the drone into arrays
+
         drawChart("temperatura", factorized.temp, factorized.labels);
+        // TODO: drawChart("ppt", factorized.ppt, factorized.labels);
     })
     .catch((error) => {
-        //TODO: handle properly
+        alert(error.message);
         console.log(error);
     });

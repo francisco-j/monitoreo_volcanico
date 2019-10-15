@@ -98,6 +98,9 @@ th, td {
   height: 75px;
   width: 75px;
 }
+.Logo:hover {
+  cursor: pointer;
+}
 
 .Banner {
   position: relative; /* soo that i can relocate the options inside*/
