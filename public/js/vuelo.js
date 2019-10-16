@@ -74,7 +74,6 @@ axios.get(`/api/vuelos/data/${droneId}`)
         let factorized = refractor(response.data); //separate the data from the drone into arrays
 
         drawChart("temperatura", factorized.temp, factorized.labels);
-        // TODO: drawChart("ppt", factorized.ppt, factorized.labels);
     })
     .catch((error) => {
         alert(error.message);

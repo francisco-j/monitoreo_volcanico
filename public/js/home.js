@@ -1,4 +1,4 @@
-var fileString = null;
+var jsonObj = null;
 var fileReady = false;
 
 //const axios = require('axios'); //already in layout
@@ -15,10 +15,11 @@ document.getElementById("newEntry").onclick = () => {
 //hide modal
 modalElemet.onclick = (event) => {
     if (event.target == modalElemet)
-    modalElemet.style.display = "none";
+        modalElemet.style.display = "none";
 };
 document.getElementById("closeModal").onclick = (event) => {
     modalElemet.style.display = "none";
+    //TODO: limpiar formulario
 };
 
 //file change
@@ -32,9 +33,18 @@ document.getElementById("drone_file").onchange = (event) => {
         fileString = fileString.replace(/,\s*$/, "");
         fileString = '{"data":[ ' + fileString + '] }';
 
+
+        try {
+            jsonObj = JSON.parse(fileString);
+        } catch (e) {
+            alert("Hay un problema con el archivo");
+            return;
+        }
+
         fileReady = true;
         console.log("file ready");
         document.getElementById("fileLabel").innerText = event.target.files[0].name;
+
     };
     reader.readAsText(event.target.files[0]);
 };
@@ -47,8 +57,6 @@ document.getElementById("drone_form").onsubmit = (event) => {
         return;
     }
 
-    let jsonObj = JSON.parse(fileString);
-
     let dateIn = document.getElementById("drone_date").value;
     let timeIn = document.getElementById("drone_time").value;
     jsonObj.date = new Date(dateIn + " " + timeIn);
@@ -60,7 +68,7 @@ document.getElementById("drone_form").onsubmit = (event) => {
         })
         .catch((error) => {
             console.log(error.message);
-            resizeBy.send(error.message);
+            alert(error.message);
         });
 };
 
@@ -83,20 +91,15 @@ Array.from(document.getElementsByClassName("Delete")).forEach((icon) => {
             })
             .catch((error) => {
                 console.log(error);
-                alert("Error al borrar:\n"+error.message);
+                alert("Error al borrar:\n" + error.message);
             });
     };
 });
 
-//TODO: add onclick to logo
 // Logo on-clock
 document.getElementsByClassName("Logo")[0].onclick = () => {
-    console.log("en homescreen");
     window.location = '/';
 };
-
-
-//TODO: reset file tag after push
 
 
 // ------------------- function declarations -------------------
@@ -134,7 +137,7 @@ function getStrings(json) {
 
 //paint each card's graphs
 Array.from(document.getElementsByClassName("Card")).forEach((card) => {
-        //request to API all entryes corresponding to the card
+    //request to API all entryes corresponding to the card
 
-        //paint graph
+    //paint graph
 });

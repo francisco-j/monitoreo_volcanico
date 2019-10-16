@@ -7,6 +7,7 @@ router.get("/", (req, res) => {
     res.render("api-home", { title: "api" });
 });
 
+// post new drone
 router.post("/drone", (req, res) => {
     // if there is no data: error
     if (req.body.data.length == 0) {
@@ -22,11 +23,12 @@ router.post("/drone", (req, res) => {
     fligth.overview = {
         time: { min: 1000000, sum: 0, max: 0 },
         temp: { min: 1000000, sum: 0, max: 0 },
-        //n sensors
+        ppm: { min: 1000000, sum: 0, max: 0 },
     };
 
+//TODO: se puede mejorar https://www.youtube.com/watch?v=R8rmfD9Y5-c
 
-    //calculate overview: sum, min, max
+    //calculate overview: sum, min, max 
     function calculate(value, overviewer) {
         if (value < overviewer.min)
             overviewer.min = value;
@@ -34,11 +36,13 @@ router.post("/drone", (req, res) => {
             overviewer.max = value;
         overviewer.sum += value;
     }
-    for (entry of fligth.data) { //iterate entries
+
+    fligth.data.forEach((entry)=>{
         calculate(entry.milisegundos, fligth.overview.time); //time
         calculate(entry.temperatura, fligth.overview.temp); //temperture
-        //n sensors
-    }
+        calculate(entry.ppm, fligth.overview.ppm); //ppm
+    })
+        
 
     //calculate sensor's mean
     function calculateMean(overviewer) {
@@ -46,7 +50,7 @@ router.post("/drone", (req, res) => {
         delete overviewer.sum;
     }
     calculateMean(fligth.overview.temp); //temperture
-    //n sensors
+    calculateMean(fligth.overview.ppm); //ppm
 
     //calculate fligth's duration
     fligth.duration = fligth.overview.time.max - fligth.overview.time.min;
@@ -56,14 +60,13 @@ router.post("/drone", (req, res) => {
     //store {figth} in mongodb
     var droneDoc = new Drone(fligth);
     droneDoc.save((err, saved)=>{
-        if (err)
-            return res.status(500).send({
-                message: 'problem saving to the database'
-            });
+        if (err){
+            res.status(500).send({ message: 'problem saving to the database' });
+            console.log(err);
+        }
         else // saved!
         {
             fligth.id = saved._id;
-            delete fligth.data;  // dont send everithing
             res.send(fligth);   //return updated json
         }
     });
