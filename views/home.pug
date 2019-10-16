@@ -37,6 +37,11 @@ block layout-content
                 td #{item.overview.temp.min}
                 td #{item.overview.temp.max}
                 td #{item.overview.temp.mean}
+              tr
+                td ppm
+                td #{item.overview.ppm.min}
+                td #{item.overview.ppm.max}
+                td #{item.overview.ppm.mean}
 
     div.Modal#modal
       form.Form#drone_form(action='/', method='POST')
