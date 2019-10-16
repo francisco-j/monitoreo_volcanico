@@ -16,88 +16,88 @@ router.post("/drone", (req, res) => {
         });
     }
 
-    let fligth = {};
-    fligth.data = req.body.data;
-    fligth.date = req.body.date;
-    fligth.entries = fligth.data.length;
-    fligth.overview = {
-        time: { min: 1000000, sum: 0, max: 0 },
-        temp: { min: 1000000, sum: 0, max: 0 },
-        ppm: { min: 1000000, sum: 0, max: 0 },
-    };
+    var droneDoc = new Drone({
+        data: req.body.data,
+        date: req.body.date,
+        entries: req.body.data.length,
+        overview: {
+            time: { min: 1000000, sum: 0, max: 0 },
+            temp: { min: 1000000, sum: 0, max: 0, mean:0 },
+            ppm: { min: 1000000, sum: 0, max: 0, mean:0 },
+        }
+    });
+    var summatory = { time: 0, temp: 0, ppm: 0};
 
-//TODO: se puede mejorar https://www.youtube.com/watch?v=R8rmfD9Y5-c
-
+    // ------------ method declaration ------------
+    //calculate sensor's mean
+    function calculateMean(overviewer, summatoryName) {
+        let mean = Math.round((summatory[`${summatoryName}`] / droneDoc.entries) * 100) / 100;
+        overviewer.mean = mean;
+    }
     //calculate overview: sum, min, max 
-    function calculate(value, overviewer) {
+    function calculateOverview(value, overviewer, summatoryName) {
         if (value < overviewer.min)
             overviewer.min = value;
         if (value > overviewer.max)
             overviewer.max = value;
-        overviewer.sum += value;
+        summatory[`${summatoryName}`] += value;
     }
+    // --------------------------------------------
 
-    fligth.data.forEach((entry)=>{
-        calculate(entry.milisegundos, fligth.overview.time); //time
-        calculate(entry.temperatura, fligth.overview.temp); //temperture
-        calculate(entry.ppm, fligth.overview.ppm); //ppm
-    })
-        
-
-    //calculate sensor's mean
-    function calculateMean(overviewer) {
-        overviewer.mean = +(overviewer.sum / fligth.entries).toFixed(2);
-        delete overviewer.sum;
-    }
-    calculateMean(fligth.overview.temp); //temperture
-    calculateMean(fligth.overview.ppm); //ppm
+    //calculate overviews
+    droneDoc.data.forEach((entry) => {
+        calculateOverview(entry.milisegundos, droneDoc.overview.time, 'time'); //time
+        calculateOverview(entry.temperatura, droneDoc.overview.temp, 'temp'); //temperture
+        calculateOverview(entry.ppm, droneDoc.overview.ppm, 'ppm'); //ppm
+    });
+    calculateMean(droneDoc.overview.temp, 'temp'); //temperture
+    calculateMean(droneDoc.overview.ppm, 'ppm'); //ppm
 
     //calculate fligth's duration
-    fligth.duration = fligth.overview.time.max - fligth.overview.time.min;
-    delete fligth.overview.time.sum;
+    droneDoc.duration = droneDoc.overview.time.max - droneDoc.overview.time.min + 1000;
+    delete droneDoc.overview.time.sum;
 
 
     //store {figth} in mongodb
-    var droneDoc = new Drone(fligth);
-    droneDoc.save((err, saved)=>{
-        if (err){
+    droneDoc.save((err, saved) => {
+        if (err) {
             res.status(500).send({ message: 'problem saving to the database' });
             console.log(err);
         }
         else // saved!
         {
-            fligth.id = saved._id;
-            res.send(fligth);   //return updated json
+            res.send(saved);   //return updated json
         }
     });
+
 });
 
 //to get the data from the fligth
 router.get("/vuelos/data/:id", (req, res) => {
     let id = req.params.id;
-    
+
     Drone.findById(id)
-    .then((flight) => {
-        res.send(flight.data);
-    })
-    .catch((e) => {
-        console.error(e);
-        res.send(e.message);
-    });
+        .then((flight) => {
+            res.send(flight.data);
+        })
+        .catch((e) => {
+            console.error(e);
+            res.send(e.message);
+        });
 });
 
 router.delete("/vuelos/:id", (req, res) => {
     let id = req.params.id;
-    
+
     Drone.findByIdAndDelete(id)
-    .then(()=>{
-        console.log("Borrado: "+id);
-        res.status(200).send();
-    })
-    .catch((e) => {
-        console.error(e.message);
-        res.send(e);
-    });
+        .then(() => {
+            console.log("Borrado: " + id);
+            res.status(200).send();
+        })
+        .catch((e) => {
+            console.error(e.message);
+            res.send(e);
+        });
 });
 
 module.exports = router
