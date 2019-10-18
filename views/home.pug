@@ -48,15 +48,16 @@ block layout-content
         div.Options#closeModal
           i.Negative.material-icons.Close close
 
-        input.File#drone_file(name="file" type='file', required)
-        label.FileLabel#fileLabel(for="drone_file")
-          i.fas.fa-cloud-upload-alt
-          span selecionar
-          span archivo
+        div.HorizontalContainer
+          input.File#drone_file(name="file" type='file', required)
+          label.FileLabel#fileLabel(for="drone_file")
+            i.fas.fa-cloud-upload-alt
+            span selecionar
+            span archivo
+          div.VerticalContainer
+            input.Button#drone_date(type='date', required)
 
-        input.Button#drone_date(type='date', required)
-
-        input.Button#drone_time(type='time', required)
+            input.Button#drone_time(type='time', required)
         
         input.Submit(type="submit" value="Subir")
 
