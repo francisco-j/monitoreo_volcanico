@@ -15,6 +15,10 @@ block layout-content
           span duracion: #{drone.durationStr}
 
         //canvas for each sensor
-        canvas#tempGraph
+        div.ChartContainer
+          div.ChartWraper
+            canvas#tempGraph
+          div.ChartWraper
+            canvas#ppmGraph
 
   script(src="/js/vuelo.js")

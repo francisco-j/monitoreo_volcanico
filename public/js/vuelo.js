@@ -3,10 +3,9 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.timeout = 2500;
 
 // ------------------- event handlesrs -------------------
-
+var responseData;
 // Logo on-clock
 document.getElementsByClassName("Logo")[0].onclick = () => {
-    console.log("en homescreen");
     window.location = '/';
 };
 
@@ -16,6 +15,7 @@ document.getElementsByClassName("Logo")[0].onclick = () => {
 //refractor data into DataTransferItemList.data
 function refractor(fullArray) {
 
+    // --------- function declaration ---------
     function formatTime(timeString) {
         tempDate = new Date(timeString);
         let seconds = tempDate.getSeconds()
@@ -25,22 +25,22 @@ function refractor(fullArray) {
 
     let myDatasets = {
         labels: [],
-        temp: []
-        //ppt: []
+        temp: [],
+        ppm: []
     };
 
     fullArray.forEach((element) => {
         myDatasets.labels.push(formatTime(element.milisegundos));
         myDatasets.temp.push(element.temperatura);
-        //ppt
+        myDatasets.ppm.push(element.ppm);
     });
 
     return myDatasets;
 }
 
-function drawChart(datasetLabel, data, labels) {
-    var myLineChart = new Chart(
-        document.getElementById("tempGraph"),
+function drawChart(canvas, datasetLabel, data, labels) {
+    window[datasetLabel] = new Chart(
+        document.getElementById(canvas),
         {
             type: 'line',
             data: {
@@ -67,15 +67,48 @@ function drawChart(datasetLabel, data, labels) {
 
 // ------------------- function calls -------------------
 
-//ask api for data array
-let droneId = document.getElementsByClassName("Card")[0].id;
-axios.get(`/api/vuelos/data/${droneId}`)
-    .then((response) => {
-        let factorized = refractor(response.data); //separate the data from the drone into arrays
 
-        drawChart("temperatura", factorized.temp, factorized.labels);
-    })
-    .catch((error) => {
-        alert(error.message);
-        console.log(error);
-    });
+function drawChart(canvas, datasetLabel, data, labels) {
+    window[datasetLabel] = new Chart(
+        document.getElementById(canvas),
+        {
+            type: 'line',
+            data: {
+                datasets: [
+                    {
+                        lineTension: 0.1,
+                        label: datasetLabel,
+                        fill: true,
+                        data: data
+                    }
+                ],
+                labels: labels
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        display: true
+                    }]
+                }
+            }
+        }
+    );
+}
+
+
+//ask api for data array
+window.onload = function () {
+    let droneId = document.getElementsByClassName("Card")[0].id;
+    axios.get(`/api/vuelos/data/${droneId}`)
+        .then((response) => {
+            responseData = response.data;
+            let factorized = refractor(response.data); //separate the data from the drone into arrays
+
+            drawChart("tempGraph", "temperatura", factorized.temp, factorized.labels);
+            drawChart("ppmGraph", "particulas por millon", factorized.ppm, factorized.labels);
+        })
+        .catch((error) => {
+            alert(error.message);
+            console.log(error);
+        });
+}

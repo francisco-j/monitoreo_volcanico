@@ -135,9 +135,13 @@ function getStrings(json) {
 
 // ------------------- function calls -------------------
 
+//https://stackoverflow.com/questions/42535217/show-multiple-responsive-chart-in-the-same-page-using-chart-js
 //paint each card's graphs
-Array.from(document.getElementsByClassName("Card")).forEach((card) => {
-    //request to API all entryes corresponding to the card
+window.onload = function () {
+    Array.from(document.getElementsByClassName("Card")).forEach((card) => {
+        //request to API all entryes corresponding to the card
 
-    //paint graph
-});
+        //paint graph
+    });
+};
+
