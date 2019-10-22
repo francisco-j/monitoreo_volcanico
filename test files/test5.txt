@@ -1,5 +1,0 @@
-{"milisegundos":0, "temperatura":40.568},
-{"milisegundos":3000, "temperatura":52.714},
-{"milisegundos":6000, "temperatura":46.055},
-{"milisegundos":9000, "temperatura":44.201},
-{"milisegundos":12000, "temperatura":49.085},

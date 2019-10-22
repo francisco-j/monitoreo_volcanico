@@ -22,11 +22,11 @@ router.post("/drone", (req, res) => {
         entries: req.body.data.length,
         overview: {
             time: { min: 1000000, sum: 0, max: 0 },
-            temp: { min: 1000000, sum: 0, max: 0, mean:0 },
-            ppm: { min: 1000000, sum: 0, max: 0, mean:0 },
+            temp: { min: 1000000, sum: 0, max: 0, mean: 0 },
+            ppm: { min: 1000000, sum: 0, max: 0, mean: 0 },
         }
     });
-    var summatory = { time: 0, temp: 0, ppm: 0};
+    var summatory = { time: 0, temp: 0, ppm: 0 };
 
     // ------------ method declaration ------------
     //calculate sensor's mean
@@ -59,17 +59,13 @@ router.post("/drone", (req, res) => {
 
 
     //store {figth} in mongodb
-    droneDoc.save((err, saved) => {
-        if (err) {
+    droneDoc.save()
+        .catch((err) => {
             res.status(500).send({ message: 'problem saving to the database' });
             console.log(err);
         }
-        else // saved!
-        {
-            res.send(saved);   //return updated json
-        }
-    });
-
+        )
+        .then((saved) => res.send(saved) /*return updated json */);
 });
 
 //to get the data from the fligth

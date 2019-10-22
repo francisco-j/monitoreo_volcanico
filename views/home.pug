@@ -34,14 +34,14 @@ block layout-content
                 th prom
               tr
                 td temperatura
-                td #{item.overview.temp.min}
-                td #{item.overview.temp.max}
-                td #{item.overview.temp.mean}
+                td #{item.overview.temp.min.toFixed(2)}
+                td #{item.overview.temp.max.toFixed(2)}
+                td #{item.overview.temp.mean.toFixed(2)}
               tr
                 td ppm
-                td #{item.overview.ppm.min}
-                td #{item.overview.ppm.max}
-                td #{item.overview.ppm.mean}
+                td #{item.overview.ppm.min.toFixed(2)}
+                td #{item.overview.ppm.max.toFixed(2)}
+                td #{item.overview.ppm.mean.toFixed(2)}
 
     div.Modal#modal
       form.Form#drone_form(action='/', method='POST')
