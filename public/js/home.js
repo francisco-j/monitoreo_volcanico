@@ -24,6 +24,7 @@ function cleanForm() {
     form.getElementsByClassName("FileLabel")[0].innerHTML = fileLabelInnerHtml;
     form.getElementsByClassName("Button")[0].value = "";
     form.getElementsByClassName("Button")[1].value = "";
+    form.getElementsByClassName("File")[0].value = "";
 }
 document.getElementById("closeModal").onclick = (event) => {
     modalElemet.style.display = "none";
@@ -61,7 +62,7 @@ document.getElementById("drone_file").onchange = (event) => {
 document.getElementById("drone_form").onsubmit = (event) => {
     event.preventDefault()
     if (fileReady == false) {
-        alert("upload a file, or wait for the file to upload");
+        alert("seleccione el archivo del que desea subir");
         return;
     }
 
