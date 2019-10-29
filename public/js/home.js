@@ -132,12 +132,16 @@ function getStrings(json) {
     let tempDate = new Date(json.date)
     let formatedDate = tempDate.getDate() + ' ' + monthNames[tempDate.getMonth()] + ' ' + tempDate.getFullYear();
 
+    /*
     let hours = (tempDate.getHours()) % 12; // mod 12;
     if (hours == 0) hours = 12; //if'0' then'12'
     let ampm = tempDate.getHours() >= 12 ? 'pm' : 'am';
     let minutes = tempDate.getMinutes();
     if (minutes < 10) minutes = '0' + minutes;
     let formatedTime = hours + ':' + minutes + ' ' + ampm;
+    */
+   //for some reason this prints in 24hr format, but node prints in 12hr format
+   let formatedTime = tempDate.toLocaleTimeString();
 
     tempDate = new Date(json.duration);
     let seconds = tempDate.getSeconds()

@@ -7,12 +7,15 @@ router.get("/", (req, res) => {
         var monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         entry.formatedDate = entry.date.getDate() + ' ' + monthNames[entry.date.getMonth()] + ' ' + entry.date.getFullYear();
 
+        /*
         var hours = (entry.date.getHours())% 12; // mod 12;
             if(hours==0) hours=12; //if'0' then'12'
         var ampm = entry.date.getHours() >= 12 ? 'pm' : 'am';
         var minutes = entry.date.getMinutes();
             if(minutes < 10) minutes = '0'+minutes;
         entry.formatedTime = hours + ':' + minutes + ' ' + ampm;
+        */
+       entry.formatedTime = entry.date.toLocaleTimeString();
         
         let seconds = entry.duration.getSeconds()
             if(seconds < 10) seconds = '0'+seconds;
@@ -38,12 +41,15 @@ router.get("/vuelos/:id", (req, res) => {
         entry.formatedDate = entry.date.getDate() + ' ' + monthNames[entry.date.getMonth()] + ' ' + entry.date.getFullYear();
 
         //time
+        /*
         var hours = (entry.date.getHours())% 12; // mod 12;
             if(hours==0) hours=12; //if'0' then'12'
         var ampm = entry.date.getHours() >= 12 ? 'pm' : 'am';
         var minutes = entry.date.getMinutes();
             if(minutes < 10) minutes = '0'+minutes;
         entry.formatedTime = hours + ':' + minutes + ' ' + ampm;
+        */
+        entry.formatedTime = entry.date.toLocaleTimeString();
         
         //duration
         let seconds = entry.duration.getSeconds()
