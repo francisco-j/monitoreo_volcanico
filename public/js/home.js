@@ -91,16 +91,16 @@ Array.from(document.getElementsByClassName("Eye")).forEach((icon) => icon.onclic
 
 // trash-icons on-click
 function deleteHandler(event) {
-    card = event.target.parentNode.parentNode;
-    axios.delete(`/api/vuelos/${card.id}`)
-        .then((response) => {
-            alert("borrado con exito");
-            card.remove();
-        })
-        .catch((error) => {
-            console.log(error);
-            alert("Error al borrar:\n" + error.message);
-        });
+    let card = event.target.parentNode.parentNode;
+    if (confirm("¿borrar buelo?"))
+        axios.delete(`/api/vuelos/${card.id}`)
+            .then((response) => {
+                card.remove();
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("Error al borrar:\n" + error.message);
+            });
 };
 Array.from(document.getElementsByClassName("Delete")).forEach((icon) => {
     icon.onclick = deleteHandler;

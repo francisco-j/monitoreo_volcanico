@@ -156,6 +156,7 @@ th, td {
   overflow: auto;
   flex-wrap: wrap;
   margin-top: 10px;
+  justify-content:center;
 }
 .Card {
   position: relative; /* soo that i can relocate the options inside*/
@@ -286,7 +287,7 @@ input.Button{
   justify-content: center;
   align-items: center;
   height: 30px;
-  width: 140px;
+  width: 150px;
   background: var(--highlight);
   border-radius: 30px;
   font-size: 16px;
