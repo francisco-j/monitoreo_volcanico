@@ -120,7 +120,7 @@ function addCard(json) {
     let newCard = document.createElement("div");
     newCard.id = `${json._id}`;
     newCard.className = "Card";
-    newCard.innerHTML = `<div class="Options"><i class="Eye material-icons">visibility</i><i class="Delete material-icons">delete</i></div><h2>${formatedDate}</h2><h4>${formatedTime}</h4><div class="Details"><span>entradas:${json.entries}</span><span>duracion: ${durationStr}</span></div><table><tr><th> </th><th>min</th><th>max</th><th>prom</th></tr><tr><td>temperatura</td><td>${json.overview.temp.min.toFixed(2)}</td><td>${json.overview.temp.max.toFixed(2)}</td><td>${json.overview.temp.mean.toFixed(2)}</td></tr><tr><td>temperatura</td><td>${json.overview.ppm.min.toFixed(2)}</td><td>${json.overview.ppm.max.toFixed(2)}</td><td>${json.overview.ppm.mean.toFixed(2)}</td></tr></table>`;
+    newCard.innerHTML = `<div class="Options"><i class="Eye material-icons">visibility</i><i class="Delete material-icons">delete</i></div><h2>${formatedDate}</h2><h4>${formatedTime}</h4><div class="Details"><span>entradas:${json.entries}</span><span>duracion: ${durationStr}min</span></div><table><tr><th> </th><th>min</th><th>max</th><th>prom</th></tr><tr><td>temperatura</td><td>${json.overview.temp.min.toFixed(2)}</td><td>${json.overview.temp.max.toFixed(2)}</td><td>${json.overview.temp.mean.toFixed(2)}</td></tr><tr><td>ppm</td><td>${json.overview.ppm.min.toFixed(2)}</td><td>${json.overview.ppm.max.toFixed(2)}</td><td>${json.overview.ppm.mean.toFixed(2)}</td></tr></table>`;
 
     newCard.getElementsByClassName("Eye")[0].onclick = detailsHandler;
     newCard.getElementsByClassName("Delete")[0].onclick = detailsHandler;
