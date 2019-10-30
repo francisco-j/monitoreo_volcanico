@@ -92,7 +92,7 @@ Array.from(document.getElementsByClassName("Eye")).forEach((icon) => icon.onclic
 // trash-icons on-click
 function deleteHandler(event) {
     let card = event.target.parentNode.parentNode;
-    if (confirm("¿borrar buelo?"))
+    if (confirm("¿borrar vuelo?"))
         axios.delete(`/api/vuelos/${card.id}`)
             .then((response) => {
                 card.remove();
