@@ -38,36 +38,8 @@ function refractor(fullArray) {
     return myDatasets;
 }
 
-function drawChart(canvas, datasetLabel, data, labels) {
-    window[datasetLabel] = new Chart(
-        document.getElementById(canvas),
-        {
-            type: 'line',
-            data: {
-                datasets: [
-                    {
-                        lineTension: 0.1,
-                        label: datasetLabel,
-                        fill: true,
-                        data: data
-                    }
-                ],
-                labels: labels
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        display: true
-                    }]
-                }
-            }
-        }
-    );
-}
-
 // ------------------- function calls -------------------
 
-
 function drawChart(canvas, datasetLabel, data, labels) {
     window[datasetLabel] = new Chart(
         document.getElementById(canvas),
@@ -95,20 +67,54 @@ function drawChart(canvas, datasetLabel, data, labels) {
     );
 }
 
+function drawChart(canvas, datasetLabel, data, labels, ymin, ymax) {
+    window[datasetLabel] = new Chart(
+        document.getElementById(canvas),
+        {
+            type: 'line',
+            data: {
+                datasets: [
+                    {
+                        lineTension: 0.1,
+                        label: datasetLabel,
+                        fill: true,
+                        data: data
+                    }
+                ],
+                labels: labels
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        display: true
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            suggestedMin: ymin,
+                            suggestedMax: ymax
+                        }
+                    }],
+                }
+            }
+        }
+    );
+}
 
 //ask api for data array
 window.onload = function () {
     let droneId = document.getElementsByClassName("Card")[0].id;
-    axios.get(`/api/vuelos/data/${droneId}`)
+    axios
+        .get(`/api/vuelos/data/${droneId}`)
         .then((response) => {
             responseData = response.data;
             let factorized = refractor(response.data); //separate the data from the drone into arrays
 
-            drawChart("tempGraph", "temperatura", factorized.temp, factorized.labels);
-            drawChart("ppmGraph", "particulas por millon", factorized.ppm, factorized.labels);
+            drawChart("tempGraph", "temperatura C°", factorized.temp, factorized.labels);
+            drawChart("ppmGraph", "particulas por millon", factorized.ppm, factorized.labels, 0, 5000);
         })
         .catch((error) => {
             alert(error.message);
             console.log(error);
         });
 }
+S
