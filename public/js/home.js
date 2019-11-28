@@ -53,7 +53,6 @@ document.getElementById("drone_file").onchange = (event) => {
         fileReady = true;
         console.log("file ready");
         document.getElementById("fileLabel").innerText = event.target.files[0].name;
-
     };
     reader.readAsText(event.target.files[0]);
 };

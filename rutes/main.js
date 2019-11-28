@@ -58,9 +58,9 @@ router.get("/vuelos/:id", (req, res) => {
     };
     function addStringsSample(sample) {
         //sample time
-        let seconds = sample.milisegundos.getSeconds();
+        let seconds = sample.mili.getSeconds();
             if(seconds < 10) seconds = '0'+seconds;
-        sample.FormatedMilisegundos = ""+sample.milisegundos.getMinutes() + ":" + seconds;
+        sample.FormatedMilisegundos = ""+sample.mili.getMinutes() + ":" + seconds;
     }
 
     

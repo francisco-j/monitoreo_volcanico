@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var FlightSchema = new Schema({
     date: { type: Date, default: Date.now }, //includes time
     entries: Number,
-    data: [{ milisegundos: Date, temperatura: Number, ppm: Number}],
+    data: [{ mili: Date, temp: Number, ppm: Number}],
     duration: Date,
     overview: {
         time: { min: Number, mean: Number, max: Number },

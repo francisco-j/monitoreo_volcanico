@@ -46,8 +46,8 @@ router.post("/drone", (req, res) => {
 
     //calculate overviews
     droneDoc.data.forEach((entry) => {
-        calculateOverview(entry.milisegundos, droneDoc.overview.time, 'time'); //time
-        calculateOverview(entry.temperatura, droneDoc.overview.temp, 'temp'); //temperture
+        calculateOverview(entry.mili, droneDoc.overview.time, 'time'); //time
+        calculateOverview(entry.temp, droneDoc.overview.temp, 'temp'); //temperture
         calculateOverview(entry.ppm, droneDoc.overview.ppm, 'ppm'); //ppm
     });
     calculateMean(droneDoc.overview.temp, 'temp'); //temperture
@@ -57,7 +57,6 @@ router.post("/drone", (req, res) => {
     droneDoc.duration = droneDoc.overview.time.max - droneDoc.overview.time.min + 1000;
     delete droneDoc.overview.time.sum;
 
-
     //store {figth} in mongodb
     droneDoc.save()
         .catch((err) => {
@@ -65,7 +64,7 @@ router.post("/drone", (req, res) => {
             console.log(err);
         }
         )
-        .then((saved) => res.send(saved) /*return updated json */);
+        .then((saved) => res.send(saved)); //return updated json 
 });
 
 //to get the data from the fligth

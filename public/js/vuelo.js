@@ -30,8 +30,8 @@ function refractor(fullArray) {
     };
 
     fullArray.forEach((element) => {
-        myDatasets.labels.push(formatTime(element.milisegundos));
-        myDatasets.temp.push(element.temperatura);
+        myDatasets.labels.push(formatTime(element.mili));
+        myDatasets.temp.push(element.temp);
         myDatasets.ppm.push(element.ppm);
     });
 
